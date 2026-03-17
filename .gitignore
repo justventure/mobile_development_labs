@@ -1,0 +1,67 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Local config
+local.properties
+
+# IDE (Android Studio / IntelliJ)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Keystore (ВАЖНО — не коммитить)
+*.jks
+*.keystore
+
+# Generated files
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Kotlin / Java
+*.class
+*.jar
+*.war
+
+# Android Studio cache
+.navigation/
+.caches/
+.lint/
+
+# Signing configs
+signingConfigs/
+
+# NDK
+obj/
+.libs/
+
+# Google Services (иногда содержит ключи)
+google-services.json
+
+# Firebase
+firebase.json
+
+# Proguard
+proguard/
+
+# Test outputs
+test-output/
+
+# Misc
+*.apk
+*.ap_
+*.aab
+
+# Mac/Linux temp
+*~
+*.swp
