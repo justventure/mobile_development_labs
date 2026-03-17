@@ -7,11 +7,11 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.study.development.R
-import com.study.development.domain.entities.Product
+import com.study.development.domain.entities.CartItem
 
 class CartAdapter(
-    private val items: List<Product>,
-    private val onRemove: (Product) -> Unit
+    private val items: List<CartItem>,
+    private val onRemove: (CartItem) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -29,8 +29,8 @@ class CartAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.name.text = item.name
-        holder.price.text = "$${item.price * item.quantity}"
+        holder.name.text = item.product.name
+        holder.price.text = "$${item.totalPrice}"
         holder.quantity.text = "x${item.quantity}"
         holder.removeButton.setOnClickListener { onRemove(item) }
     }

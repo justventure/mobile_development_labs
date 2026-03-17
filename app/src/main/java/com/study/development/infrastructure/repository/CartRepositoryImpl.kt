@@ -1,6 +1,7 @@
 package com.study.development.infrastructure.repository
 
 import com.study.development.infrastructure.adapters.local.CartStorage
+import com.study.development.domain.entities.CartItem
 import com.study.development.domain.entities.Product
 import com.study.development.domain.ports.outbound.CartPort
 import javax.inject.Inject
@@ -11,26 +12,26 @@ class CartRepositoryImpl @Inject constructor(
     private val storage: CartStorage
 ) : CartPort {
 
-    private val items: MutableList<Product> = storage.loadItems()
+    private val items: MutableList<CartItem> = storage.loadItems()
 
     override fun addItem(product: Product) {
-        val index = items.indexOfFirst { it.id == product.id }
+        val index = items.indexOfFirst { it.product.id == product.id }
         if (index != -1) {
             items[index] = items[index].copy(quantity = items[index].quantity + 1)
         } else {
-            items.add(product.copy(quantity = 1))
+            items.add(CartItem(product = product, quantity = 1))
         }
         storage.saveItems(items)
     }
 
     override fun removeItem(productId: Int) {
-        items.removeAll { it.id == productId }
+        items.removeAll { it.product.id == productId }
         storage.saveItems(items)
     }
 
-    override fun getItems(): List<Product> = items.toList()
+    override fun getItems(): List<CartItem> = items.toList()
 
-    override fun getTotalPrice(): Double = items.sumOf { it.price * it.quantity }
+    override fun getTotalPrice(): Double = items.sumOf { it.totalPrice }
 
     override fun clear() {
         items.clear()

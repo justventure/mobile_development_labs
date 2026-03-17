@@ -3,7 +3,7 @@ package com.study.development.presentation.cart
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.study.development.domain.entities.Product
+import com.study.development.domain.entities.CartItem
 import com.study.development.application.use_cases.cart.CheckoutUseCase
 import com.study.development.application.use_cases.cart.GetCartItemsUseCase
 import com.study.development.application.use_cases.cart.GetTotalPriceUseCase
@@ -19,8 +19,8 @@ class CartViewModel @Inject constructor(
     private val checkoutUseCase: CheckoutUseCase
 ) : ViewModel() {
 
-    private val _items = MutableLiveData<List<Product>>()
-    val items: LiveData<List<Product>> = _items
+    private val _items = MutableLiveData<List<CartItem>>()
+    val items: LiveData<List<CartItem>> = _items
 
     private val _total = MutableLiveData<Double>()
     val total: LiveData<Double> = _total

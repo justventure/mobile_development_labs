@@ -12,14 +12,15 @@ import com.study.development.domain.entities.Product
 
 class CatalogAdapter(
     private val products: List<Product>,
-    private val onAddToCart: (Product) -> Unit
+    private val onProductClick: (Product) -> Unit,
+    private val onAddToCartClick: (Product) -> Unit
 ) : RecyclerView.Adapter<CatalogAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = view.findViewById(R.id.productImage)
         val name: TextView = view.findViewById(R.id.productName)
         val price: TextView = view.findViewById(R.id.productPrice)
-        val addButton: Button = view.findViewById(R.id.addToCartButton)
+        val addToCartButton: Button = view.findViewById(R.id.addToCartButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,8 +33,9 @@ class CatalogAdapter(
         val product = products[position]
         holder.image.setImageResource(product.imageRes)
         holder.name.text = product.name
-        holder.price.text = "Price: $${product.price}"
-        holder.addButton.setOnClickListener { onAddToCart(product) }
+        holder.price.text = "$${product.price}"
+        holder.itemView.setOnClickListener { onProductClick(product) }
+        holder.addToCartButton.setOnClickListener { onAddToCartClick(product) }
     }
 
     override fun getItemCount() = products.size
