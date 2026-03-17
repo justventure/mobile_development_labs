@@ -1,7 +1,7 @@
 package com.study.development.domain.usecase.cart
 
-import com.study.development.domain.repository.CartRepository
+import com.study.development.domain.ports.inbound.CartUseCase
 
-class RemoveFromCartUseCase(private val repository: CartRepository) {
-    operator fun invoke(productId: Int) = repository.removeItem(productId)
+class RemoveFromCartUseCase(private val port: CartUseCase) {
+    operator fun invoke(productId: Int) = port.removeItem(productId)
 }

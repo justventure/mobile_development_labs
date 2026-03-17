@@ -5,7 +5,7 @@
         android:name=".App"
         android:allowBackup="true"
         android:label="Lab1"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.Lab1">
 
         <activity
             android:name=".presentation.splash.SplashActivity"

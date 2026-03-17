@@ -2,13 +2,24 @@ package com.study.development.data.repository
 
 import com.study.development.data.local.CartStorage
 import com.study.development.domain.model.Product
-import com.study.development.domain.repository.CartRepository
+import com.study.development.domain.ports.inbound.CartUseCase
+import com.study.development.domain.ports.outbound.CartPort
 
-class CartRepositoryImpl(private val storage: CartStorage) : CartRepository {
+class CartRepositoryImpl(private val storage: CartStorage) : CartUseCase, CartPort {
 
     private val items: MutableList<Product> = storage.loadItems()
 
-    override fun addItem(product: Product) {
+    override fun addItem(product: Product) = persistItem(product)
+
+    override fun removeItem(productId: Int) = deleteItem(productId)
+
+    override fun getItems(): List<Product> = fetchItems()
+
+    override fun getTotalPrice(): Double = calculateTotal()
+
+    override fun clear() = clearAll()
+
+    override fun persistItem(product: Product) {
         val index = items.indexOfFirst { it.id == product.id }
         if (index != -1) {
             items[index] = items[index].copy(quantity = items[index].quantity + 1)
@@ -18,16 +29,16 @@ class CartRepositoryImpl(private val storage: CartStorage) : CartRepository {
         storage.saveItems(items)
     }
 
-    override fun removeItem(productId: Int) {
+    override fun deleteItem(productId: Int) {
         items.removeAll { it.id == productId }
         storage.saveItems(items)
     }
 
-    override fun getItems(): List<Product> = items.toList()
+    override fun fetchItems(): List<Product> = items.toList()
 
-    override fun getTotalPrice(): Double = items.sumOf { it.price * it.quantity }
+    override fun calculateTotal(): Double = items.sumOf { it.price * it.quantity }
 
-    override fun clear() {
+    override fun clearAll() {
         items.clear()
         storage.clear()
     }

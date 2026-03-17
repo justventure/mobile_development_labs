@@ -1,7 +1,7 @@
 package com.study.development.domain.usecase.auth
 
-import com.study.development.domain.repository.AuthRepository
+import com.study.development.domain.ports.inbound.AuthUseCase
 
-class IsLoggedInUseCase(private val repository: AuthRepository) {
-    operator fun invoke(): Boolean = repository.isLoggedIn()
+class IsLoggedInUseCase(private val port: AuthUseCase) {
+    operator fun invoke(): Boolean = port.isLoggedIn()
 }

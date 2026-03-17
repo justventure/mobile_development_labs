@@ -1,7 +1,7 @@
-package com.study.development.domain.repository
+package com.study.development.domain.ports.inbound
 
 import com.study.development.domain.model.Product
 
-interface ProductRepository {
+interface ProductUseCase {
     fun getProducts(): List<Product>
 }
