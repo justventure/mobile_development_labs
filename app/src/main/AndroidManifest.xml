@@ -2,12 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:label="Lab1"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".presentation.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -15,9 +16,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity" android:exported="false"/>
-        <activity android:name=".RegisterActivity" android:exported="false"/>
-        <activity android:name=".MainActivity" android:exported="false"/>
+        <activity android:name=".presentation.main.MainActivity"/>
+        <activity android:name=".presentation.login.LoginActivity"/>
+        <activity android:name=".presentation.register.RegisterActivity"/>
+        <activity android:name=".presentation.catalog.CatalogActivity"/>
+        <activity android:name=".presentation.cart.CartActivity"/>
+        <activity android:name=".presentation.product.ProductActivity"/>
 
     </application>
 
