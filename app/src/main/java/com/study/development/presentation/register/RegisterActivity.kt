@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.study.development.R
-import com.study.development.data.local.SessionPreferences
-import com.study.development.data.repository.AuthRepositoryImpl
-import com.study.development.domain.usecase.auth.RegisterUseCase
+import com.study.development.infrastructure.adapters.local.SessionPreferences
+import com.study.development.infrastructure.repository.AuthRepositoryImpl
+import com.study.development.application.use_cases.auth.RegisterUseCase
 import com.study.development.presentation.catalog.CatalogActivity
 
 class RegisterActivity : AppCompatActivity() {

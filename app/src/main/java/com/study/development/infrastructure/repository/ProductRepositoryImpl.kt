@@ -1,13 +1,13 @@
-package com.study.development.data.repository
+package com.study.development.infrastructure.repository
 
 import com.study.development.R
-import com.study.development.domain.model.Product
-import com.study.development.domain.ports.inbound.ProductUseCase
+import com.study.development.domain.entities.Product
 import com.study.development.domain.ports.outbound.ProductPort
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ProductRepositoryImpl : ProductUseCase, ProductPort {
-
-    override fun getProducts(): List<Product> = fetchProducts()
+@Singleton
+class ProductRepositoryImpl @Inject constructor() : ProductPort {
 
     override fun fetchProducts(): List<Product> = listOf(
         Product(1, "Apple", 2.0, R.drawable.apple),

@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.study.development.R
-import com.study.development.domain.model.Product
+import com.study.development.domain.entities.Product
 
 class CatalogAdapter(
     private val products: List<Product>,

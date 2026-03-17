@@ -1,4 +1,4 @@
-package com.study.development.domain.model
+package com.study.development.domain.entities
 
 data class Product(
     val id: Int,
@@ -7,5 +7,3 @@ data class Product(
     val imageRes: Int,
     var quantity: Int = 1
 )
-
-

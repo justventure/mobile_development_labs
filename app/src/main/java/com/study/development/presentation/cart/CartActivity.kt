@@ -4,40 +4,22 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.study.development.R
-import com.study.development.data.local.CartStorage
-import com.study.development.data.repository.CartRepositoryImpl
-import com.study.development.domain.usecase.cart.CheckoutUseCase
-import com.study.development.domain.usecase.cart.GetCartItemsUseCase
-import com.study.development.domain.usecase.cart.GetTotalPriceUseCase
-import com.study.development.domain.usecase.cart.RemoveFromCartUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CartActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: CartViewModel
+    private val viewModel: CartViewModel by viewModels()
     private lateinit var adapter: CartAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
-
-        val repository = CartRepositoryImpl(CartStorage(this))
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                @Suppress("UNCHECKED_CAST")
-                return CartViewModel(
-                    GetCartItemsUseCase(repository),
-                    RemoveFromCartUseCase(repository),
-                    GetTotalPriceUseCase(repository),
-                    CheckoutUseCase(repository)
-                ) as T
-            }
-        })[CartViewModel::class.java]
 
         val totalText = findViewById<TextView>(R.id.totalText)
         val recyclerView = findViewById<RecyclerView>(R.id.cartRecyclerView)

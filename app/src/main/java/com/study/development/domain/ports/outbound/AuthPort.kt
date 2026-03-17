@@ -1,6 +1,6 @@
 package com.study.development.domain.ports.outbound
 
-import com.study.development.domain.model.User
+import com.study.development.domain.entities.User
 
 interface AuthPort {
     fun authenticate(email: String, password: String): Boolean

@@ -1,7 +1,7 @@
 package com.study.development.domain.ports.inbound
 
-import com.study.development.domain.model.Product
+import com.study.development.domain.entities.Product
 
-interface ProductUseCase {
+interface ProductPort {
     fun getProducts(): List<Product>
 }

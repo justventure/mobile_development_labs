@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.study.development.R
-import com.study.development.domain.model.Product
+import com.study.development.domain.entities.Product
 
 class CartAdapter(
     private val items: List<Product>,

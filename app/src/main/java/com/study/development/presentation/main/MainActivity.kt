@@ -3,9 +3,9 @@ package com.study.development.presentation.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.study.development.data.local.SessionPreferences
-import com.study.development.data.repository.AuthRepositoryImpl
-import com.study.development.domain.usecase.auth.IsLoggedInUseCase
+import com.study.development.infrastructure.adapters.local.SessionPreferences
+import com.study.development.infrastructure.repository.AuthRepositoryImpl
+import com.study.development.application.use_cases.auth.IsLoggedInUseCase
 import com.study.development.presentation.catalog.CatalogActivity
 import com.study.development.presentation.login.LoginActivity
 

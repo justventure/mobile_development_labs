@@ -1,7 +1,7 @@
-package com.study.development.data.local
+package com.study.development.infrastructure.adapters.local
 
 import android.content.Context
-import com.study.development.domain.model.Product
+import com.study.development.domain.entities.Product
 import org.json.JSONArray
 import org.json.JSONObject
 

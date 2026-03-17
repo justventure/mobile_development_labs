@@ -1,11 +1,11 @@
 package com.study.development.domain.ports.outbound
 
-import com.study.development.domain.model.Product
+import com.study.development.domain.entities.Product
 
 interface CartPort {
-    fun persistItem(product: Product)
-    fun deleteItem(productId: Int)
-    fun fetchItems(): List<Product>
-    fun calculateTotal(): Double
-    fun clearAll()
+    fun addItem(product: Product)
+    fun removeItem(productId: Int)
+    fun getItems(): List<Product>
+    fun getTotalPrice(): Double
+    fun clear()
 }

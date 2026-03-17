@@ -3,13 +3,16 @@ package com.study.development.presentation.cart
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.study.development.domain.model.Product
-import com.study.development.domain.usecase.cart.CheckoutUseCase
-import com.study.development.domain.usecase.cart.GetCartItemsUseCase
-import com.study.development.domain.usecase.cart.GetTotalPriceUseCase
-import com.study.development.domain.usecase.cart.RemoveFromCartUseCase
+import com.study.development.domain.entities.Product
+import com.study.development.application.use_cases.cart.CheckoutUseCase
+import com.study.development.application.use_cases.cart.GetCartItemsUseCase
+import com.study.development.application.use_cases.cart.GetTotalPriceUseCase
+import com.study.development.application.use_cases.cart.RemoveFromCartUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class CartViewModel(
+@HiltViewModel
+class CartViewModel @Inject constructor(
     private val getCartItemsUseCase: GetCartItemsUseCase,
     private val removeFromCartUseCase: RemoveFromCartUseCase,
     private val getTotalPriceUseCase: GetTotalPriceUseCase,

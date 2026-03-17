@@ -3,15 +3,20 @@ package com.study.development.presentation.catalog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.study.development.domain.model.Product
-import com.study.development.domain.usecase.cart.AddToCartUseCase
-import com.study.development.domain.usecase.cart.GetCartItemsUseCase
-import com.study.development.domain.usecase.product.GetProductsUseCase
+import com.study.development.domain.entities.Product
+import com.study.development.application.use_cases.auth.LogoutUseCase
+import com.study.development.application.use_cases.cart.AddToCartUseCase
+import com.study.development.application.use_cases.cart.GetCartItemsUseCase
+import com.study.development.application.use_cases.cart.GetProductsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class CatalogViewModel(
+@HiltViewModel
+class CatalogViewModel @Inject constructor(
     private val getProductsUseCase: GetProductsUseCase,
     private val addToCartUseCase: AddToCartUseCase,
-    private val getCartItemsUseCase: GetCartItemsUseCase
+    private val getCartItemsUseCase: GetCartItemsUseCase,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     private val _products = MutableLiveData<List<Product>>()
@@ -31,5 +36,9 @@ class CatalogViewModel(
 
     fun refreshCartCount() {
         _cartCount.value = getCartItemsUseCase().sumOf { it.quantity }
+    }
+
+    fun logout() {
+        logoutUseCase()
     }
 }

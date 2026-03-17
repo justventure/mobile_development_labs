@@ -1,4 +1,4 @@
-package com.study.development.data.local
+package com.study.development.infrastructure.adapters.local
 
 import android.content.Context
 

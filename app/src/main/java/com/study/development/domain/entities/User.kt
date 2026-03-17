@@ -1,4 +1,4 @@
-package com.study.development.domain.model
+package com.study.development.domain.entities
 
 data class User(
     val name: String,

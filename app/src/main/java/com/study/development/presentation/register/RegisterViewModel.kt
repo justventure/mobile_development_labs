@@ -3,7 +3,7 @@ package com.study.development.presentation.register
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.study.development.domain.usecase.auth.RegisterUseCase
+import com.study.development.application.use_cases.auth.RegisterUseCase
 
 class RegisterViewModel(private val registerUseCase: RegisterUseCase) : ViewModel() {
 

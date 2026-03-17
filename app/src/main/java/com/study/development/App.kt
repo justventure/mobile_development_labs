@@ -1,9 +1,7 @@
 package com.study.development
 
 import android.app.Application
-import com.study.development.data.local.CartStorage
-import com.study.development.data.repository.CartRepositoryImpl
+import dagger.hilt.android.HiltAndroidApp
 
-class App : Application() {
-    val cartRepository by lazy { CartRepositoryImpl(CartStorage(this)) }
-}
+@HiltAndroidApp
+class App : Application()

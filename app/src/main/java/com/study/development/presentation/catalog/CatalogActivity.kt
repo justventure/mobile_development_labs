@@ -4,42 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.study.development.App
 import com.study.development.R
-import com.study.development.data.local.SessionPreferences
-import com.study.development.data.repository.AuthRepositoryImpl
-import com.study.development.domain.usecase.auth.LogoutUseCase
-import com.study.development.domain.usecase.cart.AddToCartUseCase
-import com.study.development.domain.usecase.cart.GetCartItemsUseCase
-import com.study.development.domain.usecase.product.GetProductsUseCase
-import com.study.development.data.repository.ProductRepositoryImpl
 import com.study.development.presentation.cart.CartActivity
 import com.study.development.presentation.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CatalogActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: CatalogViewModel
+    private val viewModel: CatalogViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_catalog)
-
-        val cartRepository = (application as App).cartRepository
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                @Suppress("UNCHECKED_CAST")
-                return CatalogViewModel(
-                    GetProductsUseCase(ProductRepositoryImpl()),
-                    AddToCartUseCase(cartRepository),
-                    GetCartItemsUseCase(cartRepository)
-                ) as T
-            }
-        })[CatalogViewModel::class.java]
 
         val cartCountText = findViewById<TextView>(R.id.cartCountText)
         val recyclerView = findViewById<RecyclerView>(R.id.catalogRecyclerView)
@@ -65,8 +46,7 @@ class CatalogActivity : AppCompatActivity() {
         }
 
         logoutButton.setOnClickListener {
-            LogoutUseCase(AuthRepositoryImpl(SessionPreferences(this)))()
-            (application as App).cartRepository.clear()
+            viewModel.logout()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
