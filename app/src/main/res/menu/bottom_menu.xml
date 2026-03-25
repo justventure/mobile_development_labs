@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/catalogFragment"
-        android:icon="@android:drawable/ic_menu_gallery"
+        android:icon="@drawable/ic_home"
         android:title="Каталог" />
 
     <item
         android:id="@+id/cartFragment"
-        android:icon="@android:drawable/ic_menu_agenda"
+        android:icon="@drawable/ic_cart"
         android:title="Корзина" />
 
 </menu>

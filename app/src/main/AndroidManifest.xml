@@ -20,6 +20,7 @@
         <activity android:name=".presentation.login.LoginActivity"/>
         <activity android:name=".presentation.main.ui.MainHostActivity"/>
         <activity android:name=".presentation.register.RegisterActivity"/>
+        <activity android:name=".presentation.product.ProductActivity"/>
 
     </application>
 

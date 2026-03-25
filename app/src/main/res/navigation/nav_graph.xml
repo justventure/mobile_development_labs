@@ -5,10 +5,12 @@
 
     <fragment
         android:id="@+id/catalogFragment"
-        android:name="com.study.development.presentation.catalog.CatalogFragment" />
+        android:name="com.study.development.presentation.catalog.CatalogFragment"
+        android:label="Catalog" />
 
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.study.development.presentation.cart.CartFragment" />
+        android:name="com.study.development.presentation.cart.CartFragment"
+        android:label="Cart" />
 
 </navigation>

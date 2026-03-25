@@ -30,29 +30,30 @@ class CatalogViewModel @Inject constructor(
     val cartCount: LiveData<Int> = _cartCount
 
     fun loadProducts() {
-        viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) { getProductsUseCase() }
-            _products.value = result
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = getProductsUseCase()
+            _products.postValue(result)
         }
     }
 
     fun addToCart(product: Product) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) { addToCartUseCase(product) }
-            refreshCartCount()
+        viewModelScope.launch(Dispatchers.IO) {
+            addToCartUseCase(product)
+            val count = getCartItemsUseCase().sumOf { it.quantity }
+            _cartCount.postValue(count)
         }
     }
 
     fun refreshCartCount() {
-        viewModelScope.launch {
-            val count = withContext(Dispatchers.IO) { getCartItemsUseCase().sumOf { it.quantity } }
-            _cartCount.value = count
+        viewModelScope.launch(Dispatchers.IO) {
+            val count = getCartItemsUseCase().sumOf { it.quantity }
+            _cartCount.postValue(count)
         }
     }
 
     fun logout() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) { logoutUseCase() }
+        viewModelScope.launch(Dispatchers.IO) {
+            logoutUseCase()
         }
     }
 }

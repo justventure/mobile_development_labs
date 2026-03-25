@@ -15,8 +15,11 @@ class ProductRepositoryImpl @Inject constructor() : ProductPort {
         Product(3, "Orange", 3.0, R.drawable.orange, "Juicy orange packed with vitamin C."),
         Product(4, "Mango", 4.0, R.drawable.mango, "Tropical mango with sweet aroma."),
         Product(5, "Grapes", 2.5, R.drawable.grapes, "Seedless green grapes, perfect for snacking."),
-        Product(6, "Strawberry", 3.5, R.drawable.strawberry, "Fresh strawberries, great for desserts."),
         Product(7, "Watermelon", 5.0, R.drawable.watermelon, "Large juicy watermelon, perfect for summer."),
-        Product(8, "Pineapple", 4.5, R.drawable.pineapple, "Tropical pineapple with tangy sweet taste.")
+        Product(8, "Pineapple", 4.5, R.drawable.pineapple, "Tropical pineapple with tangy sweet taste."),
+        Product(9, "Watermelon", 5.0, R.drawable.watermelon, "Large juicy watermelon, perfect for summer."),
+        Product(10, "Pineapple", 4.5, R.drawable.pineapple, "Tropical pineapple with tangy sweet taste."),
+        Product(11, "Pineapple", 4.5, R.drawable.pineapple, "Tropical pineapple with tangy sweet taste.")
+
     )
 }

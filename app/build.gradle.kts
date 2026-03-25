@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.study.development"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.material.v1110)
 
     // Hilt
     implementation(libs.dagger.android)

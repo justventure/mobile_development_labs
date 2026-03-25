@@ -46,4 +46,9 @@ class ProductActivity : AppCompatActivity() {
             Toast.makeText(this, "${product.name} added to cart", Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom)
+    }
 }

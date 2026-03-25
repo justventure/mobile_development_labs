@@ -25,14 +25,16 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.cartRecyclerView)
         val checkoutButton = view.findViewById<Button>(R.id.checkoutButton)
 
+        adapter = CartAdapter { cartItem ->
+            viewModel.removeItem(cartItem.product.id)
+        }
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
 
         viewModel.items.observe(viewLifecycleOwner) { items ->
-            adapter = CartAdapter(items) { cartItem ->
-                viewModel.removeItem(cartItem.product.id)
-            }
-            recyclerView.adapter = adapter
+            adapter.submitList(items)
         }
 
         viewModel.total.observe(viewLifecycleOwner) { total ->

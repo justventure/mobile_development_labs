@@ -1,5 +1,6 @@
 package com.study.development.presentation.catalog
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -19,7 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class CatalogFragment : Fragment(R.layout.fragment_catalog) {
 
     private val viewModel: CatalogViewModel by viewModels()
+    private lateinit var adapter: CatalogAdapter
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -27,27 +30,50 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.catalogRecyclerView)
         val logoutButton = view.findViewById<Button>(R.id.logoutButton)
 
+        adapter = CatalogAdapter(
+            onProductClick = { product ->
+                val intent = Intent(requireContext(), ProductActivity::class.java).apply {
+                    putExtra(ProductActivity.EXTRA_PRODUCT_ID, product.id)
+                    putExtra(ProductActivity.EXTRA_PRODUCT_NAME, product.name)
+                    putExtra(ProductActivity.EXTRA_PRODUCT_PRICE, product.price)
+                    putExtra(ProductActivity.EXTRA_PRODUCT_IMAGE, product.imageRes)
+                    putExtra(ProductActivity.EXTRA_PRODUCT_DESC, product.description)
+                }
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    startActivity(intent)
+
+                    requireActivity().overrideActivityTransition(
+                        android.app.Activity.OVERRIDE_TRANSITION_OPEN,
+                        R.anim.slide_in_bottom,
+                        R.anim.slide_out_bottom
+                    )
+                } else {
+                    startActivity(intent)
+
+                    @Suppress("DEPRECATION")
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_bottom,
+                        R.anim.slide_out_bottom
+                    )
+                }
+            },
+            onAddToCartClick = { product ->
+                viewModel.addToCart(product)
+                Toast.makeText(
+                    requireContext(),
+                    "${product.name} added to cart",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
 
         viewModel.products.observe(viewLifecycleOwner) { products ->
-            recyclerView.adapter = CatalogAdapter(
-                products,
-                onProductClick = { product ->
-                    val intent = Intent(requireContext(), ProductActivity::class.java).apply {
-                        putExtra(ProductActivity.EXTRA_PRODUCT_ID, product.id)
-                        putExtra(ProductActivity.EXTRA_PRODUCT_NAME, product.name)
-                        putExtra(ProductActivity.EXTRA_PRODUCT_PRICE, product.price)
-                        putExtra(ProductActivity.EXTRA_PRODUCT_IMAGE, product.imageRes)
-                        putExtra(ProductActivity.EXTRA_PRODUCT_DESC, product.description)
-                    }
-                    startActivity(intent)
-                },
-                onAddToCartClick = { product ->
-                    viewModel.addToCart(product)
-                    Toast.makeText(requireContext(), "${product.name} added to cart", Toast.LENGTH_SHORT).show()
-                }
-            )
+            adapter.submitList(products)
         }
 
         viewModel.cartCount.observe(viewLifecycleOwner) { count ->
