@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.study.development.R
 import com.study.development.presentation.catalog.CatalogActivity
+import com.study.development.presentation.common.NavDirection
+import com.study.development.presentation.common.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,11 +53,13 @@ class CartActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_catalog -> {
-                    val intent = Intent(this, CatalogActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-                    startActivity(intent)
-                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-                    finish()
+                    navigateTo(
+                        Intent(this, CatalogActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                        },
+                        NavDirection.LEFT,
+                        finishCurrent = true
+                    )
                     true
                 }
                 R.id.nav_cart -> true

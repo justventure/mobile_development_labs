@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.study.development.R
 import com.study.development.presentation.cart.CartActivity
+import com.study.development.presentation.common.NavDirection
+import com.study.development.presentation.common.navigateTo
 import com.study.development.presentation.login.LoginActivity
 import com.study.development.presentation.product.ProductActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,10 +39,12 @@ class CatalogActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_catalog -> true
                 R.id.nav_cart -> {
-                    val intent = Intent(this, CartActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-                    startActivity(intent)
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                    navigateTo(
+                        Intent(this, CartActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                        },
+                        NavDirection.RIGHT
+                    )
                     false
                 }
                 else -> false
@@ -53,15 +57,16 @@ class CatalogActivity : AppCompatActivity() {
             recyclerView.adapter = CatalogAdapter(
                 products,
                 onProductClick = { product ->
-                    val intent = Intent(this, ProductActivity::class.java).apply {
-                        putExtra(ProductActivity.EXTRA_PRODUCT_ID, product.id)
-                        putExtra(ProductActivity.EXTRA_PRODUCT_NAME, product.name)
-                        putExtra(ProductActivity.EXTRA_PRODUCT_PRICE, product.price)
-                        putExtra(ProductActivity.EXTRA_PRODUCT_IMAGE, product.imageRes)
-                        putExtra(ProductActivity.EXTRA_PRODUCT_DESC, product.description)
-                    }
-                    startActivity(intent)
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                    navigateTo(
+                        Intent(this, ProductActivity::class.java).apply {
+                            putExtra(ProductActivity.EXTRA_PRODUCT_ID, product.id)
+                            putExtra(ProductActivity.EXTRA_PRODUCT_NAME, product.name)
+                            putExtra(ProductActivity.EXTRA_PRODUCT_PRICE, product.price)
+                            putExtra(ProductActivity.EXTRA_PRODUCT_IMAGE, product.imageRes)
+                            putExtra(ProductActivity.EXTRA_PRODUCT_DESC, product.description)
+                        },
+                        NavDirection.RIGHT
+                    )
                 },
                 onAddToCartClick = { product ->
                     viewModel.addToCart(product)
@@ -79,9 +84,11 @@ class CatalogActivity : AppCompatActivity() {
 
         logoutButton.setOnClickListener {
             viewModel.logout()
-            startActivity(Intent(this, LoginActivity::class.java))
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-            finish()
+            navigateTo(
+                Intent(this, LoginActivity::class.java),
+                NavDirection.LEFT,
+                finishCurrent = true
+            )
         }
     }
 

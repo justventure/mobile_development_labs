@@ -8,8 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue_primary">#FF6B2FBE</color>
-    <color name="blue_on_primary">#FF000000</color>
+    <color name="blue_on_primary">#FFFFFFFF</color>
     <color name="blue_container">#FF0A5C00</color>
     <color name="nav_active">#FF39FF14</color>
     <color name="nav_inactive">#FF9E9E9E</color>
+    <color name="status_bar">#98B5FF</color>
 </resources>
