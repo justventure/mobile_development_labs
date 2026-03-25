@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.study.development.R
-import com.study.development.presentation.catalog.CatalogActivity
+import com.study.development.presentation.main.MainActivity
 import com.study.development.presentation.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,13 +27,14 @@ class LoginActivity : AppCompatActivity() {
         val registerButton = findViewById<Button>(R.id.registerButton)
 
         viewModel.loginSuccess.observe(this) {
-            startActivity(Intent(this, CatalogActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
         loginButton.setOnClickListener {
             val email = emailInput.text.toString()
             val password = passwordInput.text.toString()
+
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 viewModel.login(email, password)
             } else {

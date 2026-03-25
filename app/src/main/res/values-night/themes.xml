@@ -11,4 +11,10 @@
         <item name="backgroundTint">@color/white</item>
         <item name="android:textColor">#FF6B2FBE</item>
     </style>
+    <style name="SmallBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:minHeight">50dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="itemHorizontalTranslationEnabled">false</item>
+    </style>
 </resources>

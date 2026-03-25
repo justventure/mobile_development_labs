@@ -12,7 +12,7 @@ import com.study.development.R
 import com.study.development.infrastructure.adapters.local.SessionPreferences
 import com.study.development.infrastructure.repository.AuthRepositoryImpl
 import com.study.development.application.use_cases.auth.RegisterUseCase
-import com.study.development.presentation.catalog.CatalogActivity
+import com.study.development.presentation.main.MainActivity
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -37,7 +37,7 @@ class RegisterActivity : AppCompatActivity() {
 
         viewModel.registerSuccess.observe(this) {
             Toast.makeText(this, "Account created!", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, CatalogActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
