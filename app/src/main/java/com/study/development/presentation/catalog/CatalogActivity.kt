@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CatalogActivity : AppCompatActivity() {
 
     private val viewModel: CatalogViewModel by viewModels()
+    private lateinit var bottomNavigation: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +29,7 @@ class CatalogActivity : AppCompatActivity() {
         val cartCountText = findViewById<TextView>(R.id.cartCountText)
         val recyclerView = findViewById<RecyclerView>(R.id.catalogRecyclerView)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
-        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNavigation = findViewById(R.id.bottomNavigation)
 
         bottomNavigation.selectedItemId = R.id.nav_catalog
 
@@ -36,7 +37,9 @@ class CatalogActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_catalog -> true
                 R.id.nav_cart -> {
-                    startActivity(Intent(this, CartActivity::class.java))
+                    val intent = Intent(this, CartActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                    startActivity(intent)
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     false
                 }
@@ -46,15 +49,17 @@ class CatalogActivity : AppCompatActivity() {
 
         viewModel.products.observe(this) { products ->
             recyclerView.layoutManager = LinearLayoutManager(this)
+            recyclerView.setHasFixedSize(true)
             recyclerView.adapter = CatalogAdapter(
                 products,
                 onProductClick = { product ->
-                    val intent = Intent(this, ProductActivity::class.java)
-                    intent.putExtra(ProductActivity.EXTRA_PRODUCT_ID, product.id)
-                    intent.putExtra(ProductActivity.EXTRA_PRODUCT_NAME, product.name)
-                    intent.putExtra(ProductActivity.EXTRA_PRODUCT_PRICE, product.price)
-                    intent.putExtra(ProductActivity.EXTRA_PRODUCT_IMAGE, product.imageRes)
-                    intent.putExtra(ProductActivity.EXTRA_PRODUCT_DESC, product.description)
+                    val intent = Intent(this, ProductActivity::class.java).apply {
+                        putExtra(ProductActivity.EXTRA_PRODUCT_ID, product.id)
+                        putExtra(ProductActivity.EXTRA_PRODUCT_NAME, product.name)
+                        putExtra(ProductActivity.EXTRA_PRODUCT_PRICE, product.price)
+                        putExtra(ProductActivity.EXTRA_PRODUCT_IMAGE, product.imageRes)
+                        putExtra(ProductActivity.EXTRA_PRODUCT_DESC, product.description)
+                    }
                     startActivity(intent)
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 },
@@ -82,6 +87,7 @@ class CatalogActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        bottomNavigation.selectedItemId = R.id.nav_catalog
         viewModel.refreshCartCount()
     }
 }

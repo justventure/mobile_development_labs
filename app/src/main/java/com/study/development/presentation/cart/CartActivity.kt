@@ -1,10 +1,12 @@
 package com.study.development.presentation.cart
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +26,21 @@ class CartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    overrideActivityTransition(
+                        OVERRIDE_TRANSITION_CLOSE,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right
+                    )
+                } else {
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+                }
+            }
+        })
+
         val totalText = findViewById<TextView>(R.id.totalText)
         val recyclerView = findViewById<RecyclerView>(R.id.cartRecyclerView)
         val checkoutButton = findViewById<Button>(R.id.checkoutButton)
@@ -34,7 +51,9 @@ class CartActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_catalog -> {
-                    startActivity(Intent(this, CatalogActivity::class.java))
+                    val intent = Intent(this, CatalogActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                    startActivity(intent)
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                     finish()
                     true
@@ -45,6 +64,7 @@ class CartActivity : AppCompatActivity() {
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
 
         viewModel.items.observe(this) { items ->
             adapter = CartAdapter(items) { cartItem ->
@@ -70,10 +90,5 @@ class CartActivity : AppCompatActivity() {
         }
 
         viewModel.loadCart()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

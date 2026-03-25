@@ -5,9 +5,10 @@
         <item name="colorPrimaryContainer">@color/blue_container</item>
     </style>
     <style name="BottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="android:background">#FFFFFF</item>
-        <item name="itemIconTint">@color/nav_active</item>
-        <item name="itemTextColor">@color/nav_active</item>
+        <item name="android:background">#1E1E2E</item>
+        <item name="itemIconTint">@drawable/bottom_nav_color</item>
+        <item name="itemTextColor">@drawable/bottom_nav_color</item>
+        <item name="itemRippleColor">#33FFFFFF</item>
         <item name="itemPaddingTop">8dp</item>
         <item name="itemPaddingBottom">8dp</item>
         <item name="labelVisibilityMode">labeled</item>
