@@ -37,6 +37,7 @@ class CatalogActivity : AppCompatActivity() {
                 R.id.nav_catalog -> true
                 R.id.nav_cart -> {
                     startActivity(Intent(this, CartActivity::class.java))
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     false
                 }
                 else -> false
@@ -55,6 +56,7 @@ class CatalogActivity : AppCompatActivity() {
                     intent.putExtra(ProductActivity.EXTRA_PRODUCT_IMAGE, product.imageRes)
                     intent.putExtra(ProductActivity.EXTRA_PRODUCT_DESC, product.description)
                     startActivity(intent)
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 },
                 onAddToCartClick = { product ->
                     viewModel.addToCart(product)
@@ -73,6 +75,7 @@ class CatalogActivity : AppCompatActivity() {
         logoutButton.setOnClickListener {
             viewModel.logout()
             startActivity(Intent(this, LoginActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
             finish()
         }
     }

@@ -3,12 +3,16 @@ package com.study.development.presentation.catalog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.study.development.domain.entities.Product
 import com.study.development.application.use_cases.auth.LogoutUseCase
 import com.study.development.application.use_cases.cart.AddToCartUseCase
 import com.study.development.application.use_cases.cart.GetCartItemsUseCase
 import com.study.development.application.use_cases.cart.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,19 +30,29 @@ class CatalogViewModel @Inject constructor(
     val cartCount: LiveData<Int> = _cartCount
 
     fun loadProducts() {
-        _products.value = getProductsUseCase()
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) { getProductsUseCase() }
+            _products.value = result
+        }
     }
 
     fun addToCart(product: Product) {
-        addToCartUseCase(product)
-        refreshCartCount()
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) { addToCartUseCase(product) }
+            refreshCartCount()
+        }
     }
 
     fun refreshCartCount() {
-        _cartCount.value = getCartItemsUseCase().sumOf { it.quantity }
+        viewModelScope.launch {
+            val count = withContext(Dispatchers.IO) { getCartItemsUseCase().sumOf { it.quantity } }
+            _cartCount.value = count
+        }
     }
 
     fun logout() {
-        logoutUseCase()
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) { logoutUseCase() }
+        }
     }
 }

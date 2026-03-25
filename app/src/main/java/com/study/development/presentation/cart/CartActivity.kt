@@ -35,6 +35,7 @@ class CartActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_catalog -> {
                     startActivity(Intent(this, CatalogActivity::class.java))
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                     finish()
                     true
                 }
@@ -69,5 +70,10 @@ class CartActivity : AppCompatActivity() {
         }
 
         viewModel.loadCart()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }
