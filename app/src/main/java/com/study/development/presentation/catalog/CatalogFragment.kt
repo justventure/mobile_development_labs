@@ -65,7 +65,12 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         recyclerView.adapter = adapter
 
         viewModel.products.observe(viewLifecycleOwner) { products ->
-            adapter.submitList(products)
+            val oldSize = adapter.currentList.size
+            adapter.submitList(products) {
+                if (products.size > oldSize) {
+                    recyclerView.smoothScrollToPosition(products.size - 1)
+                }
+            }
         }
 
         viewModel.cartCount.observe(viewLifecycleOwner) { count ->
