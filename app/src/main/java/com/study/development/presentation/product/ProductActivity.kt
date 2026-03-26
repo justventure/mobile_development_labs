@@ -1,12 +1,12 @@
 package com.study.development.presentation.product
 
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 import com.study.development.R
 import com.study.development.domain.entities.Product
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,14 +41,23 @@ class ProductActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.productPrice).text = "$${product.price}"
         findViewById<TextView>(R.id.productDescription).text = product.description
 
-        findViewById<Button>(R.id.addToCartButton).setOnClickListener {
+        findViewById<MaterialButton>(R.id.addToCartButton).setOnClickListener {
             viewModel.addToCart(product)
             Toast.makeText(this, "${product.name} added to cart", Toast.LENGTH_SHORT).show()
+        }
+
+        findViewById<MaterialButton>(R.id.backButton).setOnClickListener {
+            finish()
         }
     }
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(0, 0)
+        }
     }
 }

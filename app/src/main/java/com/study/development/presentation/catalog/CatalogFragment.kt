@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.study.development.R
 import com.study.development.presentation.login.LoginActivity
-import com.study.development.presentation.product.ProductActivity
 import dagger.hilt.android.AndroidEntryPoint
+import com.study.development.presentation.product.ProductActivity
 
 @AndroidEntryPoint
 class CatalogFragment : Fragment(R.layout.fragment_catalog) {
@@ -39,23 +39,15 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
                     putExtra(ProductActivity.EXTRA_PRODUCT_IMAGE, product.imageRes)
                     putExtra(ProductActivity.EXTRA_PRODUCT_DESC, product.description)
                 }
+                startActivity(intent)
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                    startActivity(intent)
-
                     requireActivity().overrideActivityTransition(
-                        android.app.Activity.OVERRIDE_TRANSITION_OPEN,
-                        R.anim.slide_in_bottom,
-                        R.anim.slide_out_bottom
+                        android.app.Activity.OVERRIDE_TRANSITION_OPEN, 0, 0
                     )
                 } else {
-                    startActivity(intent)
-
                     @Suppress("DEPRECATION")
-                    requireActivity().overridePendingTransition(
-                        R.anim.slide_in_bottom,
-                        R.anim.slide_out_bottom
-                    )
+                    requireActivity().overridePendingTransition(0, 0)
                 }
             },
             onAddToCartClick = { product ->
