@@ -9,5 +9,6 @@ data class ProductEntity(
     val name: String,
     val price: Double,
     val imageRes: Int,
-    val description: String
+    val description: String,
+    val category: String = ""
 )
