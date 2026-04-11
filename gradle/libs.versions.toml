@@ -10,9 +10,9 @@ kotlin = "2.3.20"
 lifecycleLivedataKtx = "2.10.0"
 material = "1.13.0"
 coroutines = "1.10.2"
+room = "2.7.2"
 kspVersion = "2.3.5"
 hiltVersion = "2.59.2"
-hiltCompilerVersion = "1.3.0"
 composeVersion = "1.10.5"
 composeHiltNavigationVersion = "1.3.0"
 navigationUiKtx = "2.9.7"
@@ -78,11 +78,15 @@ retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", ver
 # Hilt
 dagger-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
 dagger-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltCompilerVersion" }
 
 # Coroutines
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+
+# Room
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

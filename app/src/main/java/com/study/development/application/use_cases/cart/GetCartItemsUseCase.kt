@@ -4,6 +4,10 @@ import com.study.development.domain.entities.CartItem
 import com.study.development.domain.ports.outbound.CartPort
 import javax.inject.Inject
 
-class GetCartItemsUseCase @Inject constructor(private val port: CartPort) {
-    operator fun invoke(): List<CartItem> = port.getItems()
+class GetCartItemsUseCase @Inject constructor(
+    private val port: CartPort
+) {
+    suspend operator fun invoke(): List<CartItem> {
+        return port.getItems()
+    }
 }

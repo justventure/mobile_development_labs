@@ -3,12 +3,15 @@ package com.study.development.presentation.cart
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.study.development.domain.entities.CartItem
 import com.study.development.application.use_cases.cart.CheckoutUseCase
 import com.study.development.application.use_cases.cart.GetCartItemsUseCase
 import com.study.development.application.use_cases.cart.GetTotalPriceUseCase
 import com.study.development.application.use_cases.cart.RemoveFromCartUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,18 +32,26 @@ class CartViewModel @Inject constructor(
     val checkoutDone: LiveData<Boolean> = _checkoutDone
 
     fun loadCart() {
-        _items.value = getCartItemsUseCase()
-        _total.value = getTotalPriceUseCase()
+        viewModelScope.launch(Dispatchers.IO) {
+            val items = getCartItemsUseCase()
+            val totalPrice = getTotalPriceUseCase()
+            _items.postValue(items)
+            _total.postValue(totalPrice)
+        }
     }
 
     fun removeItem(productId: Int) {
-        removeFromCartUseCase(productId)
-        loadCart()
+        viewModelScope.launch(Dispatchers.IO) {
+            removeFromCartUseCase(productId)
+            loadCart()
+        }
     }
 
     fun checkout() {
-        checkoutUseCase()
-        loadCart()
-        _checkoutDone.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            checkoutUseCase()
+            loadCart()
+            _checkoutDone.postValue(true)
+        }
     }
 }

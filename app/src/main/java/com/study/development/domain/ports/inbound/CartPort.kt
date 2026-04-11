@@ -1,23 +1,12 @@
-package com.study.development.domain.ports.inbound
+package com.study.development.domain.ports.outbound
 
+import com.study.development.domain.entities.CartItem
 import com.study.development.domain.entities.Product
 
-interface AddToCartPort {
-    fun addItem(product: Product)
-}
-
-interface RemoveFromCartPort {
-    fun removeItem(productId: Int)
-}
-
-interface GetCartItemsPort {
-    fun getItems(): List<Product>
-}
-
-interface GetTotalPricePort {
-    fun getTotalPrice(): Double
-}
-
-interface ClearCartPort {
-    fun clear()
+interface CartPort {
+    suspend fun addItem(product: Product)
+    suspend fun removeItem(productId: Int)
+    suspend fun getItems(): List<CartItem>
+    suspend fun getTotalPrice(): Double
+    suspend fun clear()
 }

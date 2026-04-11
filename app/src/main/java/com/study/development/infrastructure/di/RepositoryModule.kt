@@ -1,11 +1,11 @@
-package com.study.development.di
+package com.study.development.infrastructure.di
 
+import com.study.development.domain.ports.outbound.AuthPort
+import com.study.development.domain.ports.outbound.CartPort
+import com.study.development.domain.ports.inbound.ProductPort
 import com.study.development.infrastructure.repository.AuthRepositoryImpl
 import com.study.development.infrastructure.repository.CartRepositoryImpl
 import com.study.development.infrastructure.repository.ProductRepositoryImpl
-import com.study.development.domain.ports.outbound.AuthPort
-import com.study.development.domain.ports.outbound.CartPort
-import com.study.development.domain.ports.outbound.ProductPort
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,13 +18,13 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindAuthRepository(impl: AuthRepositoryImpl): AuthPort
+    abstract fun bindAuthPort(impl: AuthRepositoryImpl): AuthPort
 
     @Binds
     @Singleton
-    abstract fun bindCartRepository(impl: CartRepositoryImpl): CartPort
+    abstract fun bindCartPort(impl: CartRepositoryImpl): CartPort
 
     @Binds
     @Singleton
-    abstract fun bindProductRepository(impl: ProductRepositoryImpl): ProductPort
+    abstract fun bindProductPort(impl: ProductRepositoryImpl): ProductPort
 }

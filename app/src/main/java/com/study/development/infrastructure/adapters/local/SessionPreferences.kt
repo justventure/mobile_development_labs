@@ -1,8 +1,12 @@
 package com.study.development.infrastructure.adapters.local
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SessionPreferences(context: Context) {
+@Singleton
+class SessionPreferences @Inject constructor(@ApplicationContext context: Context) {
     private val prefs = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
 
     fun save(name: String, email: String) {

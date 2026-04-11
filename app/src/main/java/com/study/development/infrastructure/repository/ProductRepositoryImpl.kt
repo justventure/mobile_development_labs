@@ -1,25 +1,25 @@
 package com.study.development.infrastructure.repository
 
-import com.study.development.R
 import com.study.development.domain.entities.Product
-import com.study.development.domain.ports.outbound.ProductPort
+import com.study.development.domain.ports.inbound.ProductPort
+import com.study.development.infrastructure.data.dao.CartDao
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProductRepositoryImpl @Inject constructor() : ProductPort {
+class ProductRepositoryImpl @Inject constructor(
+    private val dao: CartDao
+) : ProductPort {
 
-    override fun fetchProducts(): List<Product> = listOf(
-        Product(1, "Apple", 2.0, R.drawable.apple, "Fresh red apple from local farms."),
-        Product(2, "Banana", 1.5, R.drawable.banana, "Sweet yellow banana, rich in potassium."),
-        Product(3, "Orange", 3.0, R.drawable.orange, "Juicy orange packed with vitamin C."),
-        Product(4, "Mango", 4.0, R.drawable.mango, "Tropical mango with sweet aroma."),
-        Product(5, "Grapes", 2.5, R.drawable.grapes, "Seedless green grapes, perfect for snacking."),
-        Product(7, "Watermelon", 5.0, R.drawable.watermelon, "Large juicy watermelon, perfect for summer."),
-        Product(8, "Pineapple", 4.5, R.drawable.pineapple, "Tropical pineapple with tangy sweet taste."),
-        Product(9, "Watermelon", 5.0, R.drawable.watermelon, "Large juicy watermelon, perfect for summer."),
-        Product(10, "Pineapple", 4.5, R.drawable.pineapple, "Tropical pineapple with tangy sweet taste."),
-        Product(11, "Pineapple", 4.5, R.drawable.pineapple, "Tropical pineapple with tangy sweet taste.")
-
-    )
+    override suspend fun fetchProducts(): List<Product> {
+        return dao.getAllProducts().map {
+            Product(
+                id = it.id,
+                name = it.name,
+                price = it.price,
+                imageRes = it.imageRes,
+                description = it.description
+            )
+        }
+    }
 }
