@@ -61,7 +61,7 @@ class CatalogViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val result = getProductsUseCase()
             _allProducts.value = result
-            _categories.postValue(result.map { it.category }.distinct().sorted())
+            _categories.postValue(result.map { it.category }.filter { it.isNotBlank() }.distinct().sorted())
         }
     }
 
@@ -85,7 +85,7 @@ class CatalogViewModel @Inject constructor(
     ): List<Product> {
         var result = list
 
-        if (category != null) result = result.filter { it.category == category }
+        if (!category.isNullOrBlank()) result = result.filter { it.category == category }
         if (query.isNotEmpty()) result = result.filter { it.name.contains(query, ignoreCase = true) }
 
         return when (sortOrder) {
