@@ -9,6 +9,7 @@ import com.study.development.application.use_cases.cart.CheckoutUseCase
 import com.study.development.application.use_cases.cart.GetCartItemsUseCase
 import com.study.development.application.use_cases.cart.GetTotalPriceUseCase
 import com.study.development.application.use_cases.cart.RemoveFromCartUseCase
+import com.study.development.application.use_cases.orders.SaveOrderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +20,8 @@ class CartViewModel @Inject constructor(
     private val getCartItemsUseCase: GetCartItemsUseCase,
     private val removeFromCartUseCase: RemoveFromCartUseCase,
     private val getTotalPriceUseCase: GetTotalPriceUseCase,
-    private val checkoutUseCase: CheckoutUseCase
+    private val checkoutUseCase: CheckoutUseCase,
+    private val saveOrderUseCase: SaveOrderUseCase
 ) : ViewModel() {
 
     private val _items = MutableLiveData<List<CartItem>>()
@@ -33,10 +35,8 @@ class CartViewModel @Inject constructor(
 
     fun loadCart() {
         viewModelScope.launch(Dispatchers.IO) {
-            val items = getCartItemsUseCase()
-            val totalPrice = getTotalPriceUseCase()
-            _items.postValue(items)
-            _total.postValue(totalPrice)
+            _items.postValue(getCartItemsUseCase())
+            _total.postValue(getTotalPriceUseCase())
         }
     }
 
@@ -49,6 +49,9 @@ class CartViewModel @Inject constructor(
 
     fun checkout() {
         viewModelScope.launch(Dispatchers.IO) {
+            val items = getCartItemsUseCase()
+            val total = getTotalPriceUseCase()
+            saveOrderUseCase(items, total)
             checkoutUseCase()
             loadCart()
             _checkoutDone.postValue(true)

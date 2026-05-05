@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.study.development.R
 import com.study.development.infrastructure.data.dao.CartDao
+import com.study.development.infrastructure.data.dao.OrderDao
 import com.study.development.infrastructure.data.dao.ProductDao
 import com.study.development.infrastructure.data.entity.ProductEntity
 import dagger.Module
@@ -33,4 +34,7 @@ object DatabaseModule {
 
     @Provides
     fun provideProductDao(database: AppDatabase): ProductDao = database.productDao()
+
+    @Provides
+    fun provideOrderDao(database: AppDatabase): OrderDao = database.orderDao()
 }

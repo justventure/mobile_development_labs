@@ -46,10 +46,14 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         }
 
         checkoutButton.setOnClickListener {
-            if (viewModel.items.value.isNullOrEmpty()) {
+            val items = viewModel.items.value
+            val total = viewModel.total.value ?: 0.0
+            if (items.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), "Cart is empty!", Toast.LENGTH_SHORT).show()
             } else {
-                viewModel.checkout()
+                val dialog = ConfirmOrderDialogFragment.newInstance(items, total)
+                dialog.onConfirm = { viewModel.checkout() }
+                dialog.show(parentFragmentManager, "confirm_order")
             }
         }
 

@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_cart"
         android:title="Корзина" />
 
+    <item
+        android:id="@+id/ordersFragment"
+        android:icon="@drawable/ic_orders"
+        android:title="Заказы" />
+
 </menu>
